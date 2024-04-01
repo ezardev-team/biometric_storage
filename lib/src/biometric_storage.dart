@@ -27,6 +27,8 @@ enum CanAuthenticateResponse {
 
   /// Plugin does not support platform. This should no longer be the case.
   unsupported,
+
+  permissionNotGranted,
 }
 
 const _canAuthenticateMapping = {
@@ -37,6 +39,7 @@ const _canAuthenticateMapping = {
   'ErrorPasscodeNotSet': CanAuthenticateResponse.errorPasscodeNotSet,
   'ErrorUnknown': CanAuthenticateResponse.unsupported,
   'ErrorStatusUnknown': CanAuthenticateResponse.statusUnknown,
+  'PermissionNotGranted': CanAuthenticateResponse.permissionNotGranted,
 };
 
 enum AuthExceptionCode {

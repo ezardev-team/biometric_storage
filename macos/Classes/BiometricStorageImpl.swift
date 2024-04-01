@@ -124,7 +124,7 @@ class BiometricStorageImpl {
   private func canAuthenticate(result: @escaping StorageCallback) {
     var error: NSError?
     let context = LAContext()
-    if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+    if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
       result("Success")
       return
     }
