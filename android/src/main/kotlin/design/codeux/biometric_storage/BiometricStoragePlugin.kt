@@ -317,16 +317,21 @@ class BiometricStoragePlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
         }
     }
 
-    private fun canAuthenticate(): CanAuthenticateResponse {
-        val credentialsResponse = biometricManager.canAuthenticate(DEVICE_CREDENTIAL)
-        logger.debug { "canAuthenticate for DEVICE_CREDENTIAL: $credentialsResponse" }
-        if (credentialsResponse == BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED) {
-            return CanAuthenticateResponse.Success
-        }
 
-        val response = biometricManager.canAuthenticate(
-            BIOMETRIC_STRONG
-        )
+    private fun isCurrentSDK29OrEarlier() : Boolean {
+        return Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q
+    }
+
+    private fun canAuthenticate(): CanAuthenticateResponse {
+        
+        val response = if(!isCurrentSDK29OrEarlier()) {
+            biometricManager.canAuthenticate(
+                BIOMETRIC_STRONG
+            )
+        } else {
+            return CanAuthenticateResponse.ErrorHwUnavailable
+        }
+        
         return CanAuthenticateResponse.values().firstOrNull { it.code == response }
             ?: throw Exception(
                 "Unknown response code {$response} (available: ${
@@ -336,6 +341,9 @@ class BiometricStoragePlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
                 }"
             )
     }
+
+
+
 
     @UiThread
     private fun authenticate(

@@ -15,7 +15,7 @@ void main() {
   PrintAppender().attachToLogger(Logger.root);
   logMessages.attachToLogger(Logger.root);
   _logger.fine('Application launched. (v2)');
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class StringBufferWrapper with ChangeNotifier {
@@ -62,6 +62,8 @@ class MemoryAppender extends BaseLogAppender {
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   MyAppState createState() => MyAppState();
 }
@@ -194,13 +196,13 @@ class MyAppState extends State<MyApp> {
                 color: Colors.white,
                 constraints: const BoxConstraints.expand(),
                 child: SingleChildScrollView(
+                  reverse: true,
                   child: Container(
                     padding: const EdgeInsets.all(16),
                     child: Text(
                       logMessages.log.toString(),
                     ),
                   ),
-                  reverse: true,
                 ),
               ),
             ),
@@ -231,8 +233,7 @@ class MyAppState extends State<MyApp> {
 
 class StorageActions extends StatelessWidget {
   const StorageActions(
-      {Key? key, required this.storageFile, required this.writeController})
-      : super(key: key);
+      {super.key, required this.storageFile, required this.writeController});
 
   final BiometricStorageFile storageFile;
   final TextEditingController writeController;
