@@ -132,22 +132,26 @@ class MyAppState extends State<MyApp> {
                           authenticationRequired: false,
                         ));
                 if (supportsAuthenticated) {
-                  _customPrompt = await BiometricStorage().getStorage(
-                      '${baseName}_customPrompt',
-                      options: StorageFileInitOptions(
-                          authenticationValidityDurationSeconds: 5),
-                      promptInfo: const PromptInfo(
-                        iosPromptInfo: IosPromptInfo(
-                          saveTitle: 'Custom save title',
-                          accessTitle: 'Custom access title.',
-                        ),
-                        androidPromptInfo: AndroidPromptInfo(
-                          title: 'Custom title',
-                          subtitle: 'Custom subtitle',
-                          description: 'Custom description',
-                          negativeButton: 'Nope!',
-                        ),
-                      ));
+                  _customPrompt = await BiometricStorage()
+                      .getStorage('${baseName}_customPrompt',
+                          options: StorageFileInitOptions(
+                            androidAuthenticationValidityDuration:
+                                const Duration(seconds: 5),
+                            darwinTouchIDAuthenticationForceReuseContextDuration:
+                                const Duration(seconds: 5),
+                          ),
+                          promptInfo: const PromptInfo(
+                            iosPromptInfo: IosPromptInfo(
+                              saveTitle: 'Custom save title',
+                              accessTitle: 'Custom access title.',
+                            ),
+                            androidPromptInfo: AndroidPromptInfo(
+                              title: 'Custom title',
+                              subtitle: 'Custom subtitle',
+                              description: 'Custom description',
+                              negativeButton: 'Nope!',
+                            ),
+                          ));
                 }
                 setState(() {});
                 _logger.info('initiailzed $baseName');
@@ -232,8 +236,11 @@ class MyAppState extends State<MyApp> {
 }
 
 class StorageActions extends StatelessWidget {
-  const StorageActions(
-      {super.key, required this.storageFile, required this.writeController});
+  const StorageActions({
+    super.key,
+    required this.storageFile,
+    required this.writeController,
+  });
 
   final BiometricStorageFile storageFile;
   final TextEditingController writeController;

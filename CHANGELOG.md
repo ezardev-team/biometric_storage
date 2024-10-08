@@ -1,3 +1,23 @@
+## 5.1.0
+
+* Fix typo in Flutter to iOS reuse duration parameter name @jefmathiot #125
+
+## 5.1.0-rc.5
+
+* upgrade dependency to web 1.0
+
+## 5.1.0-rc.4
+
+* enable building on jdk 17 and up https://github.com/authpass/biometric_storage/issues/117 thanks @connyduck
+
+## 5.1.0-rc.3
+
+* Split Split authenticationValidityDurationSeconds between android and iOS
+  * `darwinTouchIDAuthenticationForceReuseContextDuration`: Basically the equivalent to `androidAuthenticationValidityDuration`
+  * `darwinTouchIDAuthenticationAllowableReuseDuration`
+* android: return correct code if no biometric is enrolled #115 @ThomasLamprecht
+* web: migrate from dart:html to package:web (for wasm support).
+
 ## 5.0.1
 
 * Add option for iOS/MacOS to allow non-biometric authentication (`darwinBiometricOnly`) #101
